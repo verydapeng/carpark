@@ -14,7 +14,7 @@
 </head>
 
 <body>
-
+    <div id="view"></div>
     <style>
         html,
         body {
@@ -38,27 +38,30 @@
         }
     </style>
     <script type="module">
+        const view = document.getElementById("view");
 
-        function buttonClick(e) {
-
+        view.onclick = (e) => {
             localStorage.setItem("level", e.target.id);
-            location.reload();
+            render();
         }
 
-        for (let level of "1A,1B,2A,2B,3A,3B,4A".split(",")) {
+        function render() {
 
-            let b = document.createElement("button");
-            b.id = level;
-            b.innerText = level;
+            view.innerHTML = "";
+            for (let level of "1A,1B,2A,2B,3A,3B,4A".split(",")) {
 
-            b.onclick = buttonClick;
-            if (localStorage.getItem("level") == level) {
-                b.classList.add('parked-here');
+                let b = document.createElement("button");
+                b.id = level;
+                b.innerText = level;
+
+                if (localStorage.getItem("level") == level) {
+                    b.classList.add('parked-here');
+                }
+
+                view.appendChild(b);
             }
-
-            document.body.appendChild(b);
         }
-
+        render();
     </script>
 
 </body>
